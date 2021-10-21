@@ -5,8 +5,8 @@ import * as expressWinston from 'express-winston';
 import cors from 'cors';
 import debug from 'debug';
 
-import { CommonRoutesConfig } from './common/common.routes.config';
-import { GasRoutes } from './gas/gas.routes.config';
+import CommonRoutesConfig from './common/common.routes.config';
+import GasRoutes from './gas/gas.routes.config';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
