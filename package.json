@@ -2,9 +2,11 @@
   "name": "gasly",
   "version": "0.1.0",
   "description": "An Ethereum gas statistics API built with Node.js, Express, Typescript, and MongoDB.",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node --unhandled-rejections=strict ./build/app.js",
+    "debug": "export DEBUG=* && npm run start",
+    "test": "echo \" Error: No test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
