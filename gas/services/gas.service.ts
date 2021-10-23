@@ -7,6 +7,10 @@ class GasService implements CRUD {
     return GasDao.addGas(resource);
   }
 
+  async readCurrentGas() {
+    return GasDao.getCurrentGas();
+  }
+
   async readById(id: string) {
     return GasDao.getGasById(id);
   }

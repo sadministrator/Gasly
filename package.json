@@ -5,7 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "start": "tsc && node --unhandled-rejections=strict ./build/app.js",
-    "debug": "SET DEBUG=* && npm run start",
+    "debug": "export DEBUG=* && npm run start",
+    "debugWindows": "SET DEBUG=* && npm run start",
     "test": "echo \" Error: No test specified\" && exit 1"
   },
   "repository": {
@@ -32,7 +33,7 @@
     "debug": "^4.3.2",
     "express": "^4.17.1",
     "express-winston": "^4.2.0",
-    "shortid": "^2.2.16",
+    "mongoose": "^6.0.12",
     "winston": "^3.3.3"
   },
   "devDependencies": {

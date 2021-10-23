@@ -22,7 +22,9 @@ class GasMiddleware {
   async validateSameGasDoesntExist(
     req: express.Request, res: express.Response, next: express.NextFunction
   ) {
-    const gas = await gasService.readById(req.body.id);
+    log('req.body.blockNum: ', typeof(req.body.blockNum));
+    const gas = await gasService.readByBlockNum(req.body.blockNum);
+    log('validateSameGas: ', gas);
     if (!gas) {
       next();
     } else {

@@ -12,8 +12,7 @@ class GasController {
     }
 
     async getCurrentGas(req: express.Request, res: express.Response) {
-        // call a service to get current gas
-        const gas = await gasService.readById(req.body.id);
+        const gas = await gasService.readCurrentGas();
         res.status(200).send(gas);
     }
 
@@ -24,6 +23,7 @@ class GasController {
 
     async getGasByBlockNum(req: express.Request, res: express.Response) {
         const gas = await gasService.readByBlockNum(req.body.blockNum);
+        log('Controller:byBlockNum: ', req.body.blockNum,' Gas: ', gas);
         res.status(200).send(gas);
     }
 

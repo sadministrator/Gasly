@@ -13,16 +13,14 @@ export default class GasRoutes extends CommonRoutesConfig {
     this.app.route('/gas')
       .get(gasController.getCurrentGas)
       .post(
+        gasMiddleware.validateGas,
         gasMiddleware.validateSameGasDoesntExist,
         gasController.createGas
       );
 
     this.app.param('blockNum', gasMiddleware.extractBlockNum);
     this.app.route('/gas/:blockNum')
-      .get(
-        gasMiddleware.validateGas,
-        gasController.getGasByBlockNum
-      );
+      .get(gasController.getGasByBlockNum);
 
     this.app.route('/average')
       .get(
