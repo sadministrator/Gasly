@@ -22,13 +22,11 @@ class GasMiddleware {
   async validateSameGasDoesntExist(
     req: express.Request, res: express.Response, next: express.NextFunction
   ) {
-    log('req.body.blockNum: ', typeof(req.body.blockNum));
     const gas = await gasService.readByBlockNum(req.body.blockNum);
-    log('validateSameGas: ', gas);
+
     if (!gas) {
       next();
     } else {
-      log(gas);
       res.status(400).send({ 
         error: true,
         message: 'The gas info for that block already exists.'
@@ -36,7 +34,7 @@ class GasMiddleware {
     }
   }
 
-  async validateGas(
+  async validateBlockNum(
     req: express.Request, res: express.Response, next: express.NextFunction
   ) {
     // validate blockNum is valid and not in future

@@ -9,10 +9,22 @@ class GasDao {
   Schema = mongooseService.getMongoose().Schema;
   
   gasSchema = new this.Schema({
-    fast: Number,
-    average: Number,
-    low: Number,
-    blockNum: Number,
+    fast: {
+      type: Number,
+      required: true
+    },
+    average: {
+      type: Number,
+      required: true
+    },
+    low: {
+      type: Number,
+      required: true
+    },
+    blockNum: {
+      type: Number,
+      required: true
+    },
   });
 
   Gas = mongooseService.getMongoose().model('Gas', this.gasSchema);
@@ -39,7 +51,6 @@ class GasDao {
   }
 
   async getGasByBlockNum(blockNum: number) {
-    log('We searching!')
     return this.Gas.findOne({ blockNum }, { _id: 0, __v: 0 }).exec();
   }
 }

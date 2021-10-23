@@ -23,7 +23,6 @@ class GasController {
 
     async getGasByBlockNum(req: express.Request, res: express.Response) {
         const gas = await gasService.readByBlockNum(req.body.blockNum);
-        log('Controller:byBlockNum: ', req.body.blockNum,' Gas: ', gas);
         res.status(200).send(gas);
     }
 

@@ -29,8 +29,10 @@
   },
   "homepage": "https://github.com/sadministrator/gasly#readme",
   "dependencies": {
+    "axios": "^0.23.0",
     "cors": "^2.8.5",
     "debug": "^4.3.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-winston": "^4.2.0",
     "mongoose": "^6.0.12",
