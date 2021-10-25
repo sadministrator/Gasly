@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import debug from 'debug';
 
 const log: debug.IDebugger = debug('app:mongoose-service');
+const DB = process.env.DB;
 
 class MongooseService {
   private count = 0;
@@ -19,9 +20,9 @@ class MongooseService {
 
   connectWithRetry = () => {
     log('Attemping MongoDB connection (will retry if needed).');
-    mongoose.connect('mongodb://localhost:27017/api-db', this.mongooseOptions)
+    mongoose.connect(`mongodb://${DB}:27017/api-db`, this.mongooseOptions)
       .then(() => {
-        log('MongoDB is connected successfully.')
+        log('MongoDB is connected successfully.');
       })
       .catch((error) => {
         const retrySeconds = 5;

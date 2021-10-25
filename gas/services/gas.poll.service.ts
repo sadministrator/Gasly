@@ -7,6 +7,7 @@ const log: debug.IDebugger = debug('app:poll-gas');
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY!;
 const ETHERSCAN_GAS_ENDPOINT = process.env.ETHERSCAN_GAS_ENDPOINT!;
 const PORT = process.env.PORT;
+const SERVER = process.env.SERVER;
 
 class PollGas {
   constructor(seconds: number) {
@@ -21,7 +22,7 @@ class PollGas {
       const etherscanGas: EtherscanGas = response.data.result as EtherscanGas;
       const gas: CreateGas = this.convertEtherscanObject(etherscanGas);
       
-      await axios.post(`http://localhost:${PORT}/gas`, gas);
+      await axios.post(`http://${SERVER}:${PORT}/gas`, gas);
     } catch (error) {
       log(error);
     }
