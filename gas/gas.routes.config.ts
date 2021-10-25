@@ -1,26 +1,35 @@
-import * as express from 'express';
-import { CommonRoutesConfig } from '../common/common.routes.config';
+import express from 'express';
 
-export class GasRoutes extends CommonRoutesConfig {
-    constructor(app: express.Application) {
-        super(app, 'GasRoutes');
-    }
+import CommonRoutesConfig from '../common/common.routes.config';
+import gasMiddleware from './middleware/gas.middleware';
+import gasController from './controllers/gas.controller';
 
-    configureRoutes() {
-        this.app.route('/gas')
-            .get((req: express.Request, res: express.Response) => {
-                res.status(200).send('Here\'s your gas.');
-            });
+export default class GasRoutes extends CommonRoutesConfig {
+  constructor(app: express.Application) {
+    super(app, 'GasRoutes');
+  }
 
-        this.app.route('/average')
-            .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
-                // check if fromTime and toTime query strings exist
-                next();
-            })
-            .get((req: express.Request, res: express.Response) => {
-                res.status(200).send('Here\'s the average: ' + JSON.stringify(req.query));
-            });
+  configureRoutes() {
+    this.app.route('/gas')
+      .get(gasController.getCurrentGas)
+      .post(
+        gasMiddleware.validateSameGasDoesntExist,
+        gasController.createGas
+      );
 
-        return this.app;
-    }
+    this.app.param('blockNum', gasMiddleware.extractBlockNum);
+    this.app.route('/gas/:blockNum')
+      .get(
+        gasMiddleware.validateBlockNum,
+        gasController.getGasByBlockNum
+      );
+
+    this.app.route('/average')
+      .get(
+        gasMiddleware.validateRequiredAverageGasFields,
+        gasController.getAverage
+      );
+
+    return this.app;
+  }
 }
