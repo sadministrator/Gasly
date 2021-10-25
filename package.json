@@ -1,6 +1,6 @@
 {
   "name": "gasly",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An Ethereum gas statistics API built with Node.js, Express, Typescript, and MongoDB.",
   "main": "app.ts",
   "scripts": {

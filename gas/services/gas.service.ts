@@ -1,6 +1,6 @@
 import GasDao from '../daos/gas.dao';
 import { CRUD } from '../../common/interfaces/crud.interface';
-import { CreateGas, GasAverage } from '../models/gas.dto';
+import { CreateGas } from '../models/gas.dto';
 
 class GasService implements CRUD {
   async create(resource: CreateGas) {
@@ -9,6 +9,10 @@ class GasService implements CRUD {
 
   async readCurrentGas() {
     return GasDao.getCurrentGas();
+  }
+
+  async readGasInRange(fromTime: number, toTime: number) {
+    return GasDao.getGasInRange(fromTime, toTime);
   }
 
   async readById(id: string) {

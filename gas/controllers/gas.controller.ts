@@ -2,38 +2,74 @@ import express from 'express';
 import debug from 'debug';
 
 import gasService from '../services/gas.service';
+import { CreateGas } from '../models/gas.dto';
 
 const log: debug.IDebugger = debug('app:gas-controller');
 
 class GasController {
     async createGas(req: express.Request, res: express.Response) {
         const id = await gasService.create(req.body);
-        res.status(201).send({ id: id });
+
+        return res.status(201).send({ id: id });
     }
 
     async getCurrentGas(req: express.Request, res: express.Response) {
         const gas = await gasService.readCurrentGas();
-        res.status(200).send(gas);
+
+        return res.status(200).send({
+            error: false,
+            message: {
+                ...gas
+            }
+        });
     }
 
     async getGasById(req: express.Request, res: express.Response) {
         const gas = await gasService.readById(req.body.id);
-        res.status(200).send(gas);
+
+        return res.status(200).send({
+            error: false,
+            message: {
+                ...gas
+            }
+        });
     }
 
     async getGasByBlockNum(req: express.Request, res: express.Response) {
         const gas = await gasService.readByBlockNum(req.body.blockNum);
-        res.status(200).send(gas);
+
+        return res.status(200).send({
+            error: false,
+            message: {
+                ...gas
+            }
+        });
     }
 
     async getAverage(req: express.Request, res: express.Response) {
-        const average = 1337; // replace with getAverage service
-        res.status(200).send({
+        const fromTime = parseInt(req.query.fromTime as string);
+        const toTime = parseInt(req.query.toTime as string);
+        const gasInRange = await gasService.readGasInRange(fromTime, toTime);
+
+        if (gasInRange.length === 0) {
+            return res.status(404).send({
+                error: true,
+                message: 'No blocks found within that time range.'
+            });
+        }
+
+        const averagePerBlock = gasInRange.map((gas: CreateGas) => {
+            return (gas.fast + gas.average + gas.low) / 3;
+        });
+        const totalAverage = averagePerBlock
+            .reduce((a: number, b: number) => a + b) / averagePerBlock.length;
+
+        return res.status(200).send({
             error: false,
             message: {
-                averageGasPrice: average,
-                fromTime: req.query.fromTime,
-                toTime: req.query.toTime
+                averageGasPrice: totalAverage,
+                fromTime,
+                toTime
             }
         });
     }

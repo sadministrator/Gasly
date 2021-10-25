@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+const dotenvResult = dotenv.config();
+if (dotenvResult.error) {
+    throw dotenvResult.error;
+}
+
 import express from 'express';
 import * as http from 'http';
 import * as winston from 'winston';
@@ -11,7 +17,7 @@ import PollGas from './gas/services/gas.poll.service';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
-const port = 3000;
+const PORT = process.env.PORT;
 const routes: Array<CommonRoutesConfig> = [];
 const seconds = 10;
 const log: debug.IDebugger = debug('app');
@@ -36,13 +42,13 @@ app.use(expressWinston.logger(loggerOptions));
 
 routes.push(new GasRoutes(app));
 
-const runningMessage = `Server running at http://localhost:${port}`;
-const pollingMessage = `Polling gas prices every ${seconds} minutes.`;
-server.listen(port, () => {
+const runningMessage = `Server running at http://localhost:${PORT}.`;
+const pollingMessage = `Polling gas prices every ${seconds} seconds.`;
+server.listen(PORT, () => {
     routes.forEach((route: CommonRoutesConfig) => {
-        log(`Routes configures for ${route.getName()}`);
-        console.log(runningMessage);
-        new PollGas(seconds);
-        console.log(pollingMessage);
+        log(`Configuring ${route.getName()}`);
     });
+    console.log(runningMessage);
+    new PollGas(seconds);
+    console.log(pollingMessage);
 });

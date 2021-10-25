@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 
 import CommonRoutesConfig from '../common/common.routes.config';
 import gasMiddleware from './middleware/gas.middleware';

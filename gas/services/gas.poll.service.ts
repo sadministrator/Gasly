@@ -1,13 +1,12 @@
-import express from 'express';
 import axios from 'axios';
 import debug from 'debug';
 
 import { CreateGas, EtherscanGas } from '../models/gas.dto';
-require('dotenv').config();
 
 const log: debug.IDebugger = debug('app:poll-gas');
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY!;
 const ETHERSCAN_GAS_ENDPOINT = process.env.ETHERSCAN_GAS_ENDPOINT!;
+const PORT = process.env.PORT;
 
 class PollGas {
   constructor(seconds: number) {
@@ -22,7 +21,7 @@ class PollGas {
       const etherscanGas: EtherscanGas = response.data.result as EtherscanGas;
       const gas: CreateGas = this.convertEtherscanObject(etherscanGas);
       
-      await axios.post('http://localhost:3000/gas', gas);
+      await axios.post(`http://localhost:${PORT}/gas`, gas);
     } catch (error) {
       log(error);
     }
