@@ -5,7 +5,7 @@ Any Ethereum dApp or smart contract is going to have, as one of its primary conc
 **The Solution:**
 We can use an existing Ethereum Gas price API, namely the one on Etherscan, in order to create our own custom API which can be extended according to our specific use case. In this particular instance, our API will periodically poll the Etherscan API to retrieve current gas prices, save the information to our own database and expose 3 primary API endpoints:
  - `GET /gas` returns the current gas price tiers along with the current block number.
-   - An example of a successful request:                                                          
+   - An example of a successful request:  
    `{
       "error": false,
       "message": {
@@ -16,14 +16,14 @@ We can use an existing Ethereum Gas price API, namely the one on Etherscan, in o
       }
     }`
     
-    - An example of an error:                                                          
+    - An example of an error:  
    `{
       "error": true,
       "message": "The gas information for that block doesn't exist"
     }`
     
  - `GET /gas:blockNum` returns the gas price tiers for the block specified by blockNum.
-   - An example of a successful request:                                                          
+   - An example of a successful request:  
    `{
       "error": false,
       "message": {
@@ -34,24 +34,24 @@ We can use an existing Ethereum Gas price API, namely the one on Etherscan, in o
       }
     }`
     
-   - An example of an error:                                                          
+   - An example of an error:  
    `{
       "error": true,
       "message": "The gas information for that block doesn't exist"
     }`
     
  - `GET /average?fromTime=toTime=` returns the average gas price within the timeframe specified by `fromTime` and `toTime`, inclusively.
-   - An example of a successful request:                                                          
+   - An example of a successful request:  
    `{
       "error": false,
       "message": {
-        "averageGasPrice": 91.5172413793104,
+        "averageGasPrice": 91.51724137931035,
         "fromTime": 1635210802,
         "toTime": 1635211400
       }
     }`
     
-   - An example of an error:                                                          
+   - An example of an error:  
    `{
       "error": true,
       "message": "Invalid values for 'fromTime' and/or 'toTime'."
