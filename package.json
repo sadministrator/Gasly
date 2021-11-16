@@ -5,8 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "start": "tsc && node --unhandled-rejections=strict ./build/app.js",
-    "debugLinux": "export DEBUG=* && npm run start",
-    "debugWindows": "SET DEBUG=* && npm run start",
+    "debugLinux": "export DEBUG=debug && npm run start",
+    "debugWindows": "SET DEBUG=debug && npm run start",
     "test": "mocha -r ts-node/register 'test/**/*.test.ts' --unhandled-rejections=strict",
     "testDebug": "SET DEBUG=* && npm test"
   },

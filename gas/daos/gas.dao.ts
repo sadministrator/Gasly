@@ -1,6 +1,5 @@
 import debug from 'debug';
 
-import mongooseService from '../../common/services/mongoose.service';
 import GasModel, { CreateGas } from '../models/gas.dto';
 
 const log: debug.IDebugger = debug('app:in-memory-dao');

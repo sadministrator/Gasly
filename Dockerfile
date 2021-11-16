@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+RUN npm install tsc -g
+RUN tsc
 # If building for production
 # RUN npm ci --only=production
 

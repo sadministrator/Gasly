@@ -4,7 +4,7 @@ Any Ethereum dApp or smart contract is going to have, as one of its primary conc
 
 **The Solution:**
 We can use an existing Ethereum Gas price API, namely the one on Etherscan, in order to create our own custom API which can be extended according to our specific use case. In this particular instance, our API will periodically poll the Etherscan API to retrieve current gas prices, save the information to our own database and expose 3 primary API endpoints:
- - `GET /gas` returns the current gas price tiers along with the current block number.
+ - `GET /gas` returns the current gas price tiers in gwei along with the current block number.
    - An example of a successful request:  
    `{
       "error": false,
@@ -22,7 +22,7 @@ We can use an existing Ethereum Gas price API, namely the one on Etherscan, in o
       "message": "The gas information for that block doesn't exist"
     }`
     
- - `GET /gas:blockNum` returns the gas price tiers for the block specified by blockNum.
+ - `GET /gas:blockNum` returns the gas price tiers in gwei for the block specified by blockNum.
    - An example of a successful request:  
    `{
       "error": false,
@@ -40,7 +40,7 @@ We can use an existing Ethereum Gas price API, namely the one on Etherscan, in o
       "message": "The gas information for that block doesn't exist"
     }`
     
- - `GET /average?fromTime=toTime=` returns the average gas price within the timeframe specified by `fromTime` and `toTime`, inclusively.
+ - `GET /average?fromTime=toTime=` returns the average gas price within the timeframe specified by `fromTime` and `toTime`, inclusively, in gwei.
    - An example of a successful request:  
    `{
       "error": false,

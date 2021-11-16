@@ -42,7 +42,7 @@ const loggerOptions: expressWinston.LoggerOptions = {
     ),
 };
 
-if (!process.env.DEBUG) {
+if (process.env.DEBUG === 'debug') {
     loggerOptions.meta = false; // terse output when not debugging
     if (typeof global.it === 'function') {
         loggerOptions.level = 'http'; // no logging on tests
@@ -60,7 +60,7 @@ export default server.listen(PORT, () => {
     routes.forEach((route: CommonRoutesConfig) => {
         log(`Configuring ${route.getName()}`);
     });
-    console.log(runningMessage);
+    log(runningMessage);
     new PollGas(seconds);
-    console.log(pollingMessage);
+    log(pollingMessage);
 });
