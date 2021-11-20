@@ -11,7 +11,7 @@ const SERVER = process.env.SERVER;
 
 class PollGas {
   constructor(seconds: number) {
-    this.callPeriodically(seconds);
+    setInterval(this.getCurrentGas, seconds * 1000);
   }
 
   async getCurrentGas() {
@@ -26,15 +26,6 @@ class PollGas {
     } catch (error) {
       log(error);
     }
-  }
-
-  callPeriodically(seconds: number) {
-    this.getCurrentGas();
-
-    const millis = seconds * 1000;
-    setTimeout(() => {
-      this.callPeriodically(seconds);
-    }, millis);
   }
 
   convertEtherscanObject(response: EtherscanGas) {
